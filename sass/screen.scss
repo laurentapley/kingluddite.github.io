@@ -22,13 +22,52 @@ medium green - #276E3F; rgb 39 110 63
 dark green - #274231; rgb 39 66 49
 */
 
-$blue .container {
+$blue: #0065CF;
+$yellow: #D0DF00;
+$light-green: #17BF51;
+$medium-green: #276E3F;
+$dark-green: #274231;
+$boring-white: #faebd7;
+// end colors
+body {
+  background-color: $dark-green;
+  color: $boring-white;
+}
+
+.container {
   margin: 0 auto;
   width: 960px;
   border: 1px solid blue;
 }
 
+.content {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.slogan {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3em;
+}
+
 h1 {
+  padding: 10px;
+  margin: 0;
+  font-size: 5em;
+}
+
+h1,
+h2 {
   font-family: 'Exo', sans-serif;
+}
+
+h2 {
+  color: $yellow;
+  font-size: 2em;
+  padding: 10px;
+}
+
+p {
+  padding: 10px;
 }
 /*-----  End of General  ------*/

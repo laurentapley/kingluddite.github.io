@@ -1,0 +1,1 @@
+console.log("loaded"),console.log(cards.length);var gameStarted=!1;

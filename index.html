@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <link href='http://fonts.googleapis.com/css?family=Exo:400,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
 
 <head>
   <meta charset="UTF-8">
   <title>PEACE - cards to end war</title>
   <link rel="stylesheet" href="css/screen.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
-  <script src="js/cards.js"></script>
 </head>
 
 <body>
   <div class="container">
     <header>
       <h1>PEACE</h1>
+      <p class="slogan">End war with peace</p>
     </header>
     <div class="content">
       <div class="player-one">
-        <h1>Player 1</h1>
+        <h2>Player 1</h2>
+        <p>Number of Cards: <span id="playerOneScore">26</span></p>
         <div id="deck" class="card deck">Deck</div>
-      </div>
-      <section class="table animated fadeInRight">
-        <!-- <div class="card west  dA">West</div>
-        <div class="card north s10">North</div>
-        <div class="card east  cK">East</div>
-        <div class="card south h03">South</div> -->
         <div id="pile" class="card outline">Deck</div>
-      </section>
-      <h1>Player 2</h1>
+      </div>
+      <h2>Player 2</h2>
+      <p>Number of Cards: <span id="playerTwoScore">26</span></p>
       <div id="deck" class="card deck">Deck</div>
+      <div id="pile" class="card outline">Deck</div>
     </div>
   </div>
-</body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+  <script src="js/cards.js"></script>
+  <script src="app/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="js/main.js"></script>
 
 </html>
