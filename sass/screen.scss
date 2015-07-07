@@ -1,0 +1,34 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "normalize";
+@import "cards";
+/*===============================
+=            General            =
+===============================*/
+/**
+*
+* Colors
+*
+**/
+/* colors info
+blue - #0065CF; rgb 0 101 207
+yellow - #D0DF00; rgb 208 223 0
+light green - #17BF51; rgb 23 191 81
+medium green - #276E3F; rgb 39 110 63
+dark green - #274231; rgb 39 66 49
+*/
+
+$blue .container {
+  margin: 0 auto;
+  width: 960px;
+  border: 1px solid blue;
+}
+
+h1 {
+  font-family: 'Exo', sans-serif;
+}
+/*-----  End of General  ------*/

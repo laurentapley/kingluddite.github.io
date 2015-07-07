@@ -1,0 +1,22 @@
+{
+  "name": "yes",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kingluddite/twenty_five",
+  "authors": [
+    "Philip Howley <howley.phil@gmail.com>"
+  ],
+  "description": "peace card game",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.3"
+  }
+}
