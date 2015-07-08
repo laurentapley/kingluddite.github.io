@@ -10,10 +10,18 @@ console.log('loaded');
 //   of the game
 
 var gameStarted = false;
+// scores (how many cards each player has)
 var p1Cards = 0;
 var p2Cards = 0;
+// after shuffling deal 1 card to each player
 var p1Hand = [];
 var p2Hand = [];
+// store what card was played from deck
+var p1PlayedCard = null;
+var p2PlayedCard = null;
+// store and compare card values to see who wins turn
+var card1Value;
+var card2Value;
 
 // grab the interface items and populate them with
 //   the proper starting data
@@ -22,18 +30,40 @@ $('#p2Score').text(p2Cards);
 // initially hide the stop game button
 $('#btnStop').hide();
 
+var compareCards = function(card1, card2) {
+  'use strict';
+  console.log('c1:' + card1 + 'c2:' + card2);
+  // find if card1 is 3 letters long
+  if (card1.length === 3) {
+    card1Value = card1.charAt(1); // get's number
+  } else {
+    card2Value = card2.charAt(1); // get's number
+  }
+  // once you figure out what card value is greater
+  //   set both card values to null for next card
+  //   battle
+  p1PlayedCard = null;
+  p2PlayedCard = null;
+};
+
 var playHand = function() {
-  // take the top card
-  var playedCard = p1Hand.shift();
-  // console.log($('#p1Pile').text());
-  // remove all classes
+  'use strict';
   // which player requested a card
   if (this.id === "p1Deck") {
+    // take the top card
+    p1PlayedCard = p1Hand.shift();
+    // console.log($('#p1Pile').text());
+    // remove all classes
     // remove all classes and
     //  add card west classes plus the dynamic class
-    $('#p1Pile').removeClass().addClass("card west " + playedCard);
+    $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
   } else {
-    $('#p2Pile').removeClass().addClass("card west " + playedCard);
+    p2PlayedCard = p1Hand.shift();
+    $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
+  }
+  // when we have 2 cards to compare, call the compare fn
+  if (p1PlayedCard !== null && p2PlayedCard !== null) {
+    compareCards(p1PlayedCard, p2PlayedCard);
   }
 };
 
