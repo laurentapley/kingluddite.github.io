@@ -32,12 +32,20 @@ $boring-white: #faebd7;
 body {
   background-color: $dark-green;
   color: $boring-white;
+  margin: 0 auto;
 }
 
 .container {
+  position: relative;
   margin: 0 auto;
   width: 960px;
   border: 1px solid blue;
+  // .controls {
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   padding: 20px;
+  // }
 }
 
 .content {
@@ -57,7 +65,8 @@ h1 {
 }
 
 h1,
-h2 {
+h2,
+p {
   font-family: 'Exo', sans-serif;
 }
 
@@ -69,5 +78,41 @@ h2 {
 
 p {
   padding: 10px;
+}
+/* controls */
+/* links */
+
+.btn-success {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #2aa843;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn-success:hover {
+  background: #32d123;
+  text-decoration: none;
+}
+
+.btn-danger {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #e36d6d;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn-danger:hover {
+  background: #e81212;
+  text-decoration: none;
 }
 /*-----  End of General  ------*/

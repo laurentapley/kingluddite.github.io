@@ -613,9 +613,11 @@ dark green - #274231; rgb 39 66 49
 */
 body {
   background-color: #274231;
-  color: #faebd7; }
+  color: #faebd7;
+  margin: 0 auto; }
 
 .container {
+  position: relative;
   margin: 0 auto;
   width: 960px;
   border: 1px solid blue; }
@@ -634,7 +636,8 @@ h1 {
   font-size: 5em; }
 
 h1,
-h2 {
+h2,
+p {
   font-family: 'Exo', sans-serif; }
 
 h2 {
@@ -644,5 +647,37 @@ h2 {
 
 p {
   padding: 10px; }
+
+/* controls */
+/* links */
+.btn-success {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #2aa843;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; }
+
+.btn-success:hover {
+  background: #32d123;
+  text-decoration: none; }
+
+.btn-danger {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #e36d6d;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; }
+
+.btn-danger:hover {
+  background: #e81212;
+  text-decoration: none; }
 
 /*-----  End of General  ------*/
