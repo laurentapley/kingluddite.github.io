@@ -35,10 +35,31 @@ var compareCards = function(card1, card2) {
   console.log('c1:' + card1 + 'c2:' + card2);
   // find if card1 is 3 letters long
   if (card1.length === 3) {
-    card1Value = card1.charAt(1); // get's number
+    // in D10 grabs the string '10' and convert it to a number
+    card1Value = parseInt(card1.substr(1, 3)); // gets number
+    // console.log(typeof card1Value);
   } else {
-    card2Value = card2.charAt(1); // get's number
+    card1Value = 10; // gets number
   }
+  if (card2.length === 3) {
+    // in D10 grabs the string '10' and convert it to a number
+    card2Value = parseInt(card2.substr(1, 3)); // gets number
+    // console.log(typeof card1Value);
+  } else {
+    card2Value = 10; // gets number
+  }
+  // now that you have the 2 values find out which is greater and return
+  // the winner
+  if (card1Value > card2Value) {
+    p1Cards = p1Cards + 2;
+    p2Cards = p2Cards - 2;
+    return 'Player 1 Wins';
+  } else if (card2Value > card1Value) {
+    p1Cards = p1Cards - 2;
+    p2Cards = p2Cards + 2;
+    return 'Player 2 Wins';
+  }
+
   // once you figure out what card value is greater
   //   set both card values to null for next card
   //   battle
