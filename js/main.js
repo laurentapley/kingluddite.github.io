@@ -42,6 +42,10 @@ $('#btnStop').hide();
 var getCardValue = function(card) {
   'use strict';
   var cardValue;
+  // find if card1 is 3 letters long
+  //  cards either have 3 or 2 characters
+  //  if 3 chars you can strip out numbers
+  //  if 2 chars they are high cards
   if (card.length === 3) {
     // in D10 grabs the string '10' and convert it to a number
     cardValue = parseInt(card.substr(1, 3)); // gets number
@@ -61,54 +65,19 @@ var getCardValue = function(card) {
     return cardValue;
   }
 };
-/*==========  COMPARE CARDS  ==========*/
 
+/*==========  COMPARE CARDS  ==========*/
 // grab both the cards to find out which is lower
 var compareCards = function(card1, card2) {
   'use strict';
-  //console.log('c1:' + card1 + 'c2:' + card2);
-  // find if card1 is 3 letters long
-  /*==========  Player 1's Card  ==========*/
+  // find out what the card values are
   card1Value = getCardValue(card1);
   card2Value = getCardValue(card2);
-  // if (card1.length === 3) {
-  //   // in D10 grabs the string '10' and convert it to a number
-  //   card1Value = parseInt(card1.substr(1, 3)); // gets number
-  //   // console.log(typeof card1Value);
-  // } else if (card1.indexOf('J') !== -1) {
-  //   card1Value = 11; // Jacks are 11
-  // } else if (card1.indexOf('Q') !== -1) {
-  //   card1Value = 12; // Queens are 12
-  // } else if (card1.indexOf('K') !== -1) {
-  //   card1Value = 13; // Kings are 13
-  // } else if (card1.indexOf('A') !== -1) {
-  //   card1Value = 14; // Aces are 14
-  // }
 
-  /*==========  Player 2's Card  ==========*/
-
-  // if (card2.length === 3) {
-  //   // in D10 grabs the string '10' and convert it to a number
-  //   card2Value = parseInt(card2.substr(1, 3)); // gets number
-  //   // console.log(typeof card1Value);
-  // } else if (card2.indexOf('J') !== -1) {
-  //   card2Value = 11; // Jacks are 11
-  // } else if (card2.indexOf('Q') !== -1) {
-  //   card2Value = 12; // Queens are 12
-  // } else if (card2.indexOf('K') !== -1) {
-  //   card2Value = 13; // Kings are 13
-  // } else if (card2.indexOf('A') !== -1) {
-  //   card2Value = 14; // Aces are 14
-  // }
-  // now that you have the 2 values find out which is greater and return
-  // the winner
-
+  // compare the values (lowest wins!)
   if (card1Value < card2Value) {
-    // player 1 wins with lower value
-
     $('#p1Result').addClass('success').text('Winner');
     $('#p2Result').addClass('error').text('Loser');
-
     // populates status with win message
     return 'Player 1';
   } else if (card2Value < card1Value) {
@@ -121,7 +90,7 @@ var compareCards = function(card1, card2) {
   } else {
     return 'We have a tie';
   }
-
+  // never get's here????
   // once you figure out what card value is greater
   //   set both card values to null for next card
   //   battle
@@ -130,7 +99,7 @@ var compareCards = function(card1, card2) {
 };
 
 /*==========  Tie  ==========*/
-var playTieHand = function(state) {
+var playTieHand = function() {
   'use strict';
 
   // for both players
@@ -141,27 +110,30 @@ var playTieHand = function(state) {
   /*==========  Player 1  ==========*/
   // take the top 4 cards and add them to an array
   var p1TieCards = p1Hand.splice(0, 5);
-  console.log(p1TieCards);
   // append 5 cards to .player-one
-  $('.player-one').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck dA" >West</div>');
+  $('.player-one').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck ' +
+    p1TieCards[4] + '\">West</div>');
 
   var p2TieCards = p2Hand.splice(0, 5);
-  $('.player-two').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck dA" >West</div>');
-  console.log(p2TieCards);
+  $('.player-two').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck ' +
+    p2TieCards[4] + '\">West</div>');
 
-  // remove all classes
-  // remove all classes and
-  //  add card west classes plus the dynamic class
-  $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
-  playerTurn = 'p2';
-  // } else if (this.id === "p2Deck" && playerTurn === 'p2') {
-  /*==========  Player 2  ==========*/
-  p2PlayedCard = p2Hand.shift();
-  $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
-  playerTurn = 'p1';
-  // } else {
-  // return false;
-  // }
+  var winner = findWinner(p1TieCards[4], p2TieCards[4], 'tie');
+  var combinedArrays;
+  if (winner === 'Player 1') {
+    combinedArrays = p1TieCards.concat(p2TieCards);
+    console.log(combinedArrays)
+    p1Hand = p1Hand.concat(combinedArrays);
+  } else if (winner === 'Player 2') {
+    combinedArrays = p2TieCards.concat(p1TieCards);
+    console.log(combinedArrays)
+    p2Hand = p2Hand.concat(combinedArrays);
+  } else {
+    //playTieHand();
+  }
+  $('#p1Score').text(p1Hand.length);
+  $('#p2Score').text(p2Hand.length);
+
 };
 
 /*==========  Play Hand  ==========*/
@@ -194,31 +166,37 @@ var playHand = function() {
 };
 
 /*==========  Find a winner  ==========*/
-var findWinner = function(p1PlayedCard, p2PlayedCard) {
+var findWinner = function(p1PlayedCard, p2PlayedCard, state) {
   'use strict';
   // when we have 2 cards to compare, call the compare fn
   if (p1PlayedCard !== null && p2PlayedCard !== null) {
-    var winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
-    $('.status').text(winnerMessage);
-    // put the cards into the winners pile
-    if (winnerMessage === 'Player 1') {
-      console.log('p1 wins');
-      p1Hand.push(p1PlayedCard, p2PlayedCard);
-      // set both played hands to null
-      p1PlayedCard = null;
-      p2PlayedCard = null;
-    } else if (winnerMessage === 'Player 2') {
-      p2Hand.push(p1PlayedCard, p2PlayedCard);
-      console.log('p2 wins');
-      // set both played hands to null
-      p1PlayedCard = null;
-      p2PlayedCard = null;
+    if (state !== 'tie') {
+      var winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
+      $('.status').text(winnerMessage);
+      // put the cards into the winners pile
+      if (winnerMessage === 'Player 1') {
+        console.log('p1 wins' + 'p1Hand:' + p1Hand.length);
+        p1Hand.push(p1PlayedCard, p2PlayedCard);
+        // set both played hands to null
+        p1PlayedCard = null;
+        p2PlayedCard = null;
+      } else if (winnerMessage === 'Player 2') {
+        p2Hand.push(p1PlayedCard, p2PlayedCard);
+        console.log('p2 wins' + 'p2Hand:' + p2Hand.length);
+        // set both played hands to null
+        p1PlayedCard = null;
+        p2PlayedCard = null;
+      } else {
+        // we have a tie
+        // tie code here
+        console.log('tie');
+        playTieHand('tie');
+      }
     } else {
-      // we have a tie
-      // tie code here
-      console.log('tie');
-      playTieHand('tie');
+      winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
+      $('.status').text(winnerMessage);
     }
+
 
     // Update UI
     // remove the card from the losers pile (not needed)
@@ -227,12 +205,10 @@ var findWinner = function(p1PlayedCard, p2PlayedCard) {
   }
 };
 
-
 // grab the player decks
 // only if game is started
 
 /*==========  Stop The Game  ==========*/
-
 var stopGame = function() {
   'use strict';
   // set globals back to starting values
@@ -299,8 +275,6 @@ var startGame = function(evt) {
   //setTimeout(dealOutHand, 3000);
   dealOutHand();
 };
-
-
 
 // alternate giving pushing each card into
 //  each players hand (player array object)
