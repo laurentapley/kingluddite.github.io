@@ -38,7 +38,29 @@ $('#p1Score').text(p1Cards);
 $('#p2Score').text(p2Cards);
 // initially hide the stop game button
 $('#btnStop').hide();
-
+/*==========  Get Card Value  ==========*/
+var getCardValue = function(card) {
+  'use strict';
+  var cardValue;
+  if (card.length === 3) {
+    // in D10 grabs the string '10' and convert it to a number
+    cardValue = parseInt(card.substr(1, 3)); // gets number
+    return cardValue;
+    // console.log(typeof cardValue);
+  } else if (card.indexOf('J') !== -1) {
+    cardValue = 11; // Jacks are 11
+    return cardValue;
+  } else if (card.indexOf('Q') !== -1) {
+    cardValue = 12; // Queens are 12
+    return cardValue;
+  } else if (card.indexOf('K') !== -1) {
+    cardValue = 13; // Kings are 13
+    return cardValue;
+  } else if (card.indexOf('A') !== -1) {
+    cardValue = 14; // Aces are 14
+    return cardValue;
+  }
+};
 /*==========  COMPARE CARDS  ==========*/
 
 // grab both the cards to find out which is lower
@@ -47,36 +69,37 @@ var compareCards = function(card1, card2) {
   //console.log('c1:' + card1 + 'c2:' + card2);
   // find if card1 is 3 letters long
   /*==========  Player 1's Card  ==========*/
-
-  if (card1.length === 3) {
-    // in D10 grabs the string '10' and convert it to a number
-    card1Value = parseInt(card1.substr(1, 3)); // gets number
-    // console.log(typeof card1Value);
-  } else if (card1.indexOf('J') !== -1) {
-    card1Value = 11; // Jacks are 11
-  } else if (card1.indexOf('Q') !== -1) {
-    card1Value = 12; // Queens are 12
-  } else if (card1.indexOf('K') !== -1) {
-    card1Value = 13; // Kings are 13
-  } else if (card1.indexOf('A') !== -1) {
-    card1Value = 14; // Aces are 14
-  }
+  card1Value = getCardValue(card1);
+  card2Value = getCardValue(card2);
+  // if (card1.length === 3) {
+  //   // in D10 grabs the string '10' and convert it to a number
+  //   card1Value = parseInt(card1.substr(1, 3)); // gets number
+  //   // console.log(typeof card1Value);
+  // } else if (card1.indexOf('J') !== -1) {
+  //   card1Value = 11; // Jacks are 11
+  // } else if (card1.indexOf('Q') !== -1) {
+  //   card1Value = 12; // Queens are 12
+  // } else if (card1.indexOf('K') !== -1) {
+  //   card1Value = 13; // Kings are 13
+  // } else if (card1.indexOf('A') !== -1) {
+  //   card1Value = 14; // Aces are 14
+  // }
 
   /*==========  Player 2's Card  ==========*/
 
-  if (card2.length === 3) {
-    // in D10 grabs the string '10' and convert it to a number
-    card2Value = parseInt(card2.substr(1, 3)); // gets number
-    // console.log(typeof card1Value);
-  } else if (card2.indexOf('J') !== -1) {
-    card2Value = 11; // Jacks are 11
-  } else if (card2.indexOf('Q') !== -1) {
-    card2Value = 12; // Queens are 12
-  } else if (card2.indexOf('K') !== -1) {
-    card2Value = 13; // Kings are 13
-  } else if (card2.indexOf('A') !== -1) {
-    card2Value = 14; // Aces are 14
-  }
+  // if (card2.length === 3) {
+  //   // in D10 grabs the string '10' and convert it to a number
+  //   card2Value = parseInt(card2.substr(1, 3)); // gets number
+  //   // console.log(typeof card1Value);
+  // } else if (card2.indexOf('J') !== -1) {
+  //   card2Value = 11; // Jacks are 11
+  // } else if (card2.indexOf('Q') !== -1) {
+  //   card2Value = 12; // Queens are 12
+  // } else if (card2.indexOf('K') !== -1) {
+  //   card2Value = 13; // Kings are 13
+  // } else if (card2.indexOf('A') !== -1) {
+  //   card2Value = 14; // Aces are 14
+  // }
   // now that you have the 2 values find out which is greater and return
   // the winner
 
@@ -110,28 +133,35 @@ var compareCards = function(card1, card2) {
 var playTieHand = function(state) {
   'use strict';
 
+  // for both players
+  // grab 5 cards and test the outputs in temp arrays
+
   // which player requested a card
-  if (this.id === "p1Deck" && playerTurn === 'p1') {
-    /*==========  Player 1  ==========*/
-    // take the top 4 cards and add them to an array
-    var p1TieCards = p1Hand.splice(0, 5);
-    console.log(p1TieCards + ' state:' + state);
+  // if (this.id === "p1Deck" && playerTurn === 'p1') {
+  /*==========  Player 1  ==========*/
+  // take the top 4 cards and add them to an array
+  var p1TieCards = p1Hand.splice(0, 5);
+  console.log(p1TieCards);
+  // append 5 cards to .player-one
+  $('.player-one').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck dA" >West</div>');
 
+  var p2TieCards = p2Hand.splice(0, 5);
+  $('.player-two').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck dA" >West</div>');
+  console.log(p2TieCards);
 
-    // console.log($('#p1Pile').text());
-    // remove all classes
-    // remove all classes and
-    //  add card west classes plus the dynamic class
-    $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
-    playerTurn = 'p2';
-  } else if (this.id === "p2Deck" && playerTurn === 'p2') {
-    /*==========  Player 2  ==========*/
-    p2PlayedCard = p2Hand.shift();
-    $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
-    playerTurn = 'p1';
-  } else {
-    return false;
-  }
+  // remove all classes
+  // remove all classes and
+  //  add card west classes plus the dynamic class
+  $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
+  playerTurn = 'p2';
+  // } else if (this.id === "p2Deck" && playerTurn === 'p2') {
+  /*==========  Player 2  ==========*/
+  p2PlayedCard = p2Hand.shift();
+  $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
+  playerTurn = 'p1';
+  // } else {
+  // return false;
+  // }
 };
 
 /*==========  Play Hand  ==========*/
@@ -156,10 +186,11 @@ var playHand = function() {
     p2PlayedCard = p2Hand.shift();
     $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
     playerTurn = 'p1';
+    // only look for winner after player 2's turn
+    findWinner(p1PlayedCard, p2PlayedCard);
   } else {
     return false;
   }
-  findWinner(p1PlayedCard, p2PlayedCard);
 };
 
 /*==========  Find a winner  ==========*/
