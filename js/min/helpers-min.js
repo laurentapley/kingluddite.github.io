@@ -1,0 +1,1 @@
+var searchStringInArray=function(r,t){"use strict";for(var n=0;n<t.length;n++)if(t[n].match(r))return n;return-1};

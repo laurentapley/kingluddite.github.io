@@ -28,11 +28,18 @@ $light-green: #17BF51;
 $medium-green: #276E3F;
 $dark-green: #274231;
 $boring-white: #faebd7;
+$error-red: red;
+$success-green: green;
 // end colors
 body {
   background-color: $dark-green;
   color: $boring-white;
   margin: 0 auto;
+}
+
+.truce-box {
+  padding: 10px;
+  margin: 10px;
 }
 
 .container {
@@ -79,6 +86,14 @@ h2 {
 p {
   padding: 10px;
 }
+
+.success {
+  color: $success-green;
+}
+
+.error {
+  color: $error-red;
+}
 /* controls */
 /* links */
 
@@ -113,6 +128,23 @@ p {
 
 .btn-danger:hover {
   background: #e81212;
+  text-decoration: none;
+}
+
+.btn-neutral {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: $blue;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn-neutral:hover {
+  background: $blue;
   text-decoration: none;
 }
 /*-----  End of General  ------*/

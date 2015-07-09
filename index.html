@@ -11,31 +11,38 @@
 
 <body>
   <div class="container">
-    <div class="controls">
-      <a id="btnStart" class="btn-success" href="#">Start Game</a>
-      <a id="btnStop" class="btn-danger" href="#">Stop Game</a>
-    </div>
     <header>
       <h1>PEACE</h1>
       <p class="slogan">End War With Peace</p>
       <p class="status">Would you like to play a game?</p>
     </header>
     <div class="content">
+      <div class="controls">
+        <a id="btnStart" class="btn-success" href="#">Start Game</a>
+        <a id="btnStop" class="btn-danger" href="#">Stop Game</a>
+      </div>
       <div class="player-one">
-        <h2>Player 1</h2>
+        <h2>Player 1<span id="p1Result"></span></h2>
         <p>Number of Cards: <span id="p1Score"></span></p>
         <div id="p1Deck" class="card deck">Deck</div>
         <div id="p1Pile" class="card outline">Deck</div>
       </div>
-      <h2>Player 2</h2>
+      <h2>Player 2<span id="p2Result"></span></h2>
       <p>Number of Cards: <span id="p2Score"></span></p>
       <div id="p2Deck" class="card deck">Deck</div>
       <div id="p2Pile" class="card outline">Deck</div>
     </div>
+    <!-- END .content -->
+    <div class="truce-box">
+      <a href="#" class="btn-neutral p1-truce">Player 1 Declares Truce</a>
+      <a href="#" class="btn-neutral p2-truce">Player 2 Declares Truce</a>
+    </div>
   </div>
+  <!-- END .container -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script> -->
   <script src="js/lodash.custom.js"></script>
   <script src="app/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="js/helpers.js"></script>
   <script src="js/cards.js"></script>
   <script src="js/main.js"></script>
 </body>

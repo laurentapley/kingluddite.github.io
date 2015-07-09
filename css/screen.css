@@ -616,6 +616,10 @@ body {
   color: #faebd7;
   margin: 0 auto; }
 
+.truce-box {
+  padding: 10px;
+  margin: 10px; }
+
 .container {
   position: relative;
   margin: 0 auto;
@@ -648,6 +652,12 @@ h2 {
 p {
   padding: 10px; }
 
+.success {
+  color: green; }
+
+.error {
+  color: red; }
+
 /* controls */
 /* links */
 .btn-success {
@@ -678,6 +688,21 @@ p {
 
 .btn-danger:hover {
   background: #e81212;
+  text-decoration: none; }
+
+.btn-neutral {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #0065CF;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; }
+
+.btn-neutral:hover {
+  background: #0065CF;
   text-decoration: none; }
 
 /*-----  End of General  ------*/

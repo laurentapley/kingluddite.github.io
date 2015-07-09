@@ -15,6 +15,8 @@ WAR is a card game involving two players.
 The 52 card deck is evenly divided between the two players (each player gets 26 cards).
 Cards rank as usual from high to low: A K Q J T 9 8 7 6 5 4 3 2. Suits are ignored in this game.
 Players do not look at their card.
+But in PEACE the rules are flipped. Lower value wins.
+Cards rank as usual from low to high: 2 3 4 5 6 7 8 9 T J Q K A.
 Each player plays the top card of their 26 card stack.
 In WAR the higher card wins but in PEACE, the lower card wins.
 In a turn, the winner with the lowest card, takes the cards and puts them on the bottom of their deck.
