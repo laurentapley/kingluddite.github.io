@@ -1,17 +1,17 @@
-console.log('loaded');
-//console.log(cards.length);
-//console.log(shuffle());
+//console.log('main.js loaded');
 
-// icebox
+/*==========  Icebox  ==========*/
+
 // restart game has bugs cards need to be rest to outline
 // jquery load and organize scripts better
 // organize and minify all code with codekit
 // when you click on the card before game starts it should not do anything
 //  and currently it does
 
+/*==========  global variables  ==========*/
+
 // gameStarted should be false at the beginning
 //   of the game
-
 var gameStarted = false;
 // scores (how many cards each player has)
 var p1Cards = 0;
@@ -28,6 +28,9 @@ var card2Value;
 // enable both players to end game with truce at any time
 var p1Truce = false;
 var p2Truce = false;
+var playerTurn = 'p1';
+
+/*==========  User Interface  ==========*/
 
 // grab the interface items and populate them with
 //   the proper starting data
@@ -36,58 +39,58 @@ $('#p2Score').text(p2Cards);
 // initially hide the stop game button
 $('#btnStop').hide();
 
+/*==========  COMPARE CARDS  ==========*/
+
+// grab both the cards to find out which is lower
 var compareCards = function(card1, card2) {
   'use strict';
-
   //console.log('c1:' + card1 + 'c2:' + card2);
   // find if card1 is 3 letters long
+  /*==========  Player 1's Card  ==========*/
+
   if (card1.length === 3) {
     // in D10 grabs the string '10' and convert it to a number
     card1Value = parseInt(card1.substr(1, 3)); // gets number
     // console.log(typeof card1Value);
-  } else if (card1.indexOf('J')) {
+  } else if (card1.indexOf('J') !== -1) {
     card1Value = 11; // Jacks are 11
-  } else if (card1.indexOf('Q')) {
+  } else if (card1.indexOf('Q') !== -1) {
     card1Value = 12; // Queens are 12
-  } else if (card1.indexOf('K')) {
+  } else if (card1.indexOf('K') !== -1) {
     card1Value = 13; // Kings are 13
-  } else if (card1.indexOf('A')) {
+  } else if (card1.indexOf('A') !== -1) {
     card1Value = 14; // Aces are 14
   }
+
+  /*==========  Player 2's Card  ==========*/
+
   if (card2.length === 3) {
     // in D10 grabs the string '10' and convert it to a number
     card2Value = parseInt(card2.substr(1, 3)); // gets number
     // console.log(typeof card1Value);
-  } else if (card2.indexOf('J')) {
+  } else if (card2.indexOf('J') !== -1) {
     card2Value = 11; // Jacks are 11
-  } else if (card2.indexOf('Q')) {
+  } else if (card2.indexOf('Q') !== -1) {
     card2Value = 12; // Queens are 12
-  } else if (card2.indexOf('K')) {
+  } else if (card2.indexOf('K') !== -1) {
     card2Value = 13; // Kings are 13
-  } else if (card2.indexOf('A')) {
+  } else if (card2.indexOf('A') !== -1) {
     card2Value = 14; // Aces are 14
   }
   // now that you have the 2 values find out which is greater and return
   // the winner
-  //console.log('c1:' + card1Value + 'c2:' + card2Value);
+
   if (card1Value < card2Value) {
     // player 1 wins with lower value
-    // p1Cards = p1Cards + 2;
-    // p2Cards = p2Cards - 2;
-    // update interface
-    // $('#p1Score').text(p1Cards);
-    // $('#p2Score').text(p2Cards);
+
     $('#p1Result').addClass('success').text('Winner');
     $('#p2Result').addClass('error').text('Loser');
+
     // populates status with win message
     return 'Player 1';
   } else if (card2Value < card1Value) {
     // player 2 wins with lower value
-    // p1Cards = p1Cards - 2;
-    // p2Cards = p2Cards + 2;
-    // update interface
-    // $('#p1Score').text(p1Cards);
-    // $('#p2Score').text(p2Cards);
+
     $('#p2Result').addClass('success').text('Winner');
     $('#p1Result').addClass('error').text('Loser');
 
@@ -103,10 +106,43 @@ var compareCards = function(card1, card2) {
   p2PlayedCard = null;
 };
 
+/*==========  Tie  ==========*/
+var playTieHand = function(state) {
+  'use strict';
+
+  // which player requested a card
+  if (this.id === "p1Deck" && playerTurn === 'p1') {
+    /*==========  Player 1  ==========*/
+    // take the top 4 cards and add them to an array
+    var p1TieCards = p1Hand.splice(0, 5);
+    console.log(p1TieCards + ' state:' + state);
+
+
+    // console.log($('#p1Pile').text());
+    // remove all classes
+    // remove all classes and
+    //  add card west classes plus the dynamic class
+    $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
+    playerTurn = 'p2';
+  } else if (this.id === "p2Deck" && playerTurn === 'p2') {
+    /*==========  Player 2  ==========*/
+    p2PlayedCard = p2Hand.shift();
+    $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
+    playerTurn = 'p1';
+  } else {
+    return false;
+  }
+};
+
+/*==========  Play Hand  ==========*/
+// when players click their cards, do this stuff
 var playHand = function() {
   'use strict';
+  console.log(playerTurn);
+
   // which player requested a card
-  if (this.id === "p1Deck") {
+  if (this.id === "p1Deck" && playerTurn === 'p1') {
+    /*==========  Player 1  ==========*/
     // take the top card
     p1PlayedCard = p1Hand.shift();
     // console.log($('#p1Pile').text());
@@ -114,10 +150,21 @@ var playHand = function() {
     // remove all classes and
     //  add card west classes plus the dynamic class
     $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
-  } else {
+    playerTurn = 'p2';
+  } else if (this.id === "p2Deck" && playerTurn === 'p2') {
+    /*==========  Player 2  ==========*/
     p2PlayedCard = p2Hand.shift();
     $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
+    playerTurn = 'p1';
+  } else {
+    return false;
   }
+  findWinner(p1PlayedCard, p2PlayedCard);
+};
+
+/*==========  Find a winner  ==========*/
+var findWinner = function(p1PlayedCard, p2PlayedCard) {
+  'use strict';
   // when we have 2 cards to compare, call the compare fn
   if (p1PlayedCard !== null && p2PlayedCard !== null) {
     var winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
@@ -126,40 +173,62 @@ var playHand = function() {
     if (winnerMessage === 'Player 1') {
       console.log('p1 wins');
       p1Hand.push(p1PlayedCard, p2PlayedCard);
+      // set both played hands to null
+      p1PlayedCard = null;
+      p2PlayedCard = null;
     } else if (winnerMessage === 'Player 2') {
       p2Hand.push(p1PlayedCard, p2PlayedCard);
       console.log('p2 wins');
+      // set both played hands to null
+      p1PlayedCard = null;
+      p2PlayedCard = null;
     } else {
-      console.log('problem');
+      // we have a tie
+      // tie code here
+      console.log('tie');
+      playTieHand('tie');
     }
+
+    // Update UI
     // remove the card from the losers pile (not needed)
     $('#p1Score').text(p1Hand.length);
     $('#p2Score').text(p2Hand.length);
   }
 };
 
+
 // grab the player decks
 // only if game is started
 
-// stop the game
+/*==========  Stop The Game  ==========*/
+
 var stopGame = function() {
   'use strict';
   // set globals back to starting values
+  // game is turned off (set to false)
   gameStarted = false;
+  // player cards are set back to zero
   p1Cards = 0;
   p2Cards = 0;
+  // player hands are emptied out
   p1Hand = [];
   p2Hand = [];
+  playerTurn = 'p1';
+
+  // update UI
   $('#p1Score').text(p1Hand.length);
   $('#p2Score').text(p2Hand.length);
-
   $('.status').text('Game Over');
   $('#btnStop').hide();
   $('#btnStart').show();
 };
 
+/*==========  Dealing Cards  ==========*/
+
 var dealOutHand = function() {
   'use strict';
+  // UI - let the user know the cards are shuffled
+  // at time effect?
   $('.status').text('Shuffling cards...');
   // shuffle the deck
   var newHand = shuffle();
@@ -178,6 +247,9 @@ var dealOutHand = function() {
   $('#p2Score').text(p2Hand.length);
   $('.status').text('Cards Dealt');
 };
+
+/*==========  Start Game  ==========*/
+
 var startGame = function(evt) {
   'use strict';
   gameStarted = true;
@@ -198,12 +270,7 @@ var startGame = function(evt) {
 };
 
 
-// begin game
-// gameStarted = true;
-// shuffle cards
 
-// take one card at a time from the shuffled
-//  deck
 // alternate giving pushing each card into
 //  each players hand (player array object)
 // populate the interface with length of array
