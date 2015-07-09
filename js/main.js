@@ -98,6 +98,12 @@ var compareCards = function(card1, card2) {
   p2PlayedCard = null;
 };
 
+var renderScore = function(p1HandLength, p2HandLength) {
+  'use strict';
+  $('#p1Score').text(p1HandLength);
+  $('#p2Score').text(p2HandLength);
+};
+
 /*==========  Tie  ==========*/
 var playTieHand = function() {
   'use strict';
@@ -105,36 +111,55 @@ var playTieHand = function() {
   // for both players
   // grab 5 cards and test the outputs in temp arrays
 
-  // which player requested a card
+  //
   // if (this.id === "p1Deck" && playerTurn === 'p1') {
   /*==========  Player 1  ==========*/
   // take the top 4 cards and add them to an array
   var p1TieCards = p1Hand.splice(0, 5);
   // append 5 cards to .player-one
-  $('.player-one').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck ' +
+  // a chuck of code that will add 5 cards
+  //  the peace class is used to remove them easily when peace winner is determined
+  //  the last card is dynamically added by being pulled from p2TieCards[4] index
+  //  which is the last card in the sequence which will be used to determine the winner
+  $('.player-one').append('<div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck ' +
     p1TieCards[4] + '\">West</div>');
 
   var p2TieCards = p2Hand.splice(0, 5);
-  $('.player-two').append('<div class="card deck">West</div><div class="card deck">West</div><div class="card deck">West</div><div class="card deck ' +
+  // append 5 cards to .player-one
+  // a chuck of code that will add 5 cards
+  //  the peace class is used to remove them easily when peace winner is determined
+  //  the last card is dynamically added by being pulled from p2TieCards[4] index
+  //  which is the last card in the sequence which will be used to determine the winner
+  $('.player-two').append('<div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck ' +
     p2TieCards[4] + '\">West</div>');
 
   var winner = findWinner(p1TieCards[4], p2TieCards[4], 'tie');
-  var combinedArrays;
   if (winner === 'Player 1') {
-    combinedArrays = p1TieCards.concat(p2TieCards);
-    console.log(combinedArrays)
-    p1Hand = p1Hand.concat(combinedArrays);
+    // grab both players peace cards
+    var p1NewCombinedTiePile = p1TieCards.concat(p2TieCards);
+    // add them to p1's pile
+    p1Hand = p1Hand.concat(p1NewCombinedTiePile);
   } else if (winner === 'Player 2') {
-    combinedArrays = p2TieCards.concat(p1TieCards);
-    console.log(combinedArrays)
-    p2Hand = p2Hand.concat(combinedArrays);
+    // grab both players peace cards
+    var p2NewCombinedTiePile = p2TieCards.concat(p1TieCards);
+    // add them to p2's pile
+    p2Hand = p2Hand.concat(p2NewCombinedTiePile);
+    // only render score after player 2's turn
+    // score should now represent the winner with 5 plus cards
+    //  and the loser with 5 less cards
+    renderScore(p1Hand.length, p2Hand.length);
+    // remove the peace cards
+    $('.player-one').remove('.peace');
+    $('.player-two').remove('.peace');
   } else {
     //playTieHand();
   }
-  $('#p1Score').text(p1Hand.length);
-  $('#p2Score').text(p2Hand.length);
+  // $('#p1Score').text(p1Hand.length);
+  // $('#p2Score').text(p2Hand.length);
 
 };
+
+
 
 /*==========  Play Hand  ==========*/
 // when players click their cards, do this stuff
@@ -175,14 +200,14 @@ var findWinner = function(p1PlayedCard, p2PlayedCard, state) {
       $('.status').text(winnerMessage);
       // put the cards into the winners pile
       if (winnerMessage === 'Player 1') {
-        console.log('p1 wins' + 'p1Hand:' + p1Hand.length);
+        console.log('p1 wins ' + 'p2Hand:' + p2Hand.length + ' p1Hand:' + p1Hand.length);
         p1Hand.push(p1PlayedCard, p2PlayedCard);
         // set both played hands to null
         p1PlayedCard = null;
         p2PlayedCard = null;
       } else if (winnerMessage === 'Player 2') {
         p2Hand.push(p1PlayedCard, p2PlayedCard);
-        console.log('p2 wins' + 'p2Hand:' + p2Hand.length);
+        console.log('p2 wins ' + 'p2Hand:' + p2Hand.length + ' p1Hand:' + p1Hand.length);
         // set both played hands to null
         p1PlayedCard = null;
         p2PlayedCard = null;
@@ -200,8 +225,11 @@ var findWinner = function(p1PlayedCard, p2PlayedCard, state) {
 
     // Update UI
     // remove the card from the losers pile (not needed)
-    $('#p1Score').text(p1Hand.length);
-    $('#p2Score').text(p2Hand.length);
+    // $('#p1Score').text(p1Hand.length);
+    // $('#p2Score').text(p2Hand.length);
+    renderScore(p1Hand.length);
+    renderScore(p2Hand.length);
+
   }
 };
 
