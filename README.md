@@ -49,7 +49,7 @@ card winning, the lowest card wins.
 
 ### Installation Instructions
 ```
-$ git clone
+$ git clone https://github.com/kingluddite/Peace.git
 ```
 1. Clone to a folder on your computer
 2. `$ cd peace`
