@@ -6,40 +6,92 @@
 <body>
 <h1 id="peace">PEACE</h1>
 
+<p>[TOC]</p>
+
 <h2 id="wdiproject1">WDI Project 1</h2>
 
 <ul>
 <li>A two player game using HTML, Javascript and CSS</li>
 </ul>
 
-<h3 id="peacethecardgame">PEACE the card game</h3>
+<h3 id="gamedescription">Game Description</h3>
 
-<p>** What is WAR is a card game typically involving two players. It uses a standard French playing card deck. Due to its simplicity, it is played most often by children.? **</p>
+<ul>
+<li>PEACE is a card game involving two players. It is a
+variation of the WAR card game but instead of the highest
+card winning, the lowest card wins.
+<a href="http://www.pagat.com/war/war.html">Source</a></li>
+</ul>
 
-<p>Peace is a variation of the popular children&#8217;s game WAR.</p>
+<h3 id="rules">Rules</h3>
 
-<p>WAR is a card game involving two players.</p>
+<ul>
+<li>The 52 card deck is evenly divided between the two players
+ *(each player gets 26 cards)</li>
+<li>Suits are ignored in this game</li>
+<li>Players do not look at their card</li>
+<li>Cards rank as usual from low to high: 2 3 4 5 6 7 8 9 T J Q K A</li>
+<li>Each player plays the top card of their 26 card stack</li>
+<li>The players continue playing this way until 1 player has a full deck
+ (56 cards). The player with all the cards is the winner of PEACE</li>
+<li>If a turn has each player with an equal valued card (tie), then you have PEACE</li>
+<li>When there is a tie, the following occurs *</li>
+<li>The tied cards stay on the table and both players play the next card four
+cards of their pile face down (they are spelling the word P.E.A.C.E out
+loud) and then the fifth card face-up. The player who&#8217;s card is lower wins
+and gets all the cards from the peace tie added to their pile.
 
-<p>** How is the game played? **
-(source: http://www.pagat.com/war/war.html)
-The 52 card deck is evenly divided between the two players (each player gets 26 cards).
-Cards rank as usual from high to low: A K Q J T 9 8 7 6 5 4 3 2. Suits are ignored in this game.
-Players do not look at their card.
-But in PEACE the rules are flipped. Lower value wins.
-Cards rank as usual from low to high: 2 3 4 5 6 7 8 9 T J Q K A.
-Each player plays the top card of their 26 card stack.
-In WAR the higher card wins but in PEACE, the lower card wins.
-In a turn, the winner with the lowest card, takes the cards and puts them on the bottom of their deck.
-The players continue playing this way until 1 player has a full deck (56 cards). The player with all the cards is the winner of PEACE.
-If a turn has each player with an equal valued card, then you have PEACE.
-** When there is a tie, how PEACE works **
-The tied cards stay on the table and both players play the next card of their pile face down and then another card face-up.</p>
+<ul>
+<li>If you don&#8217;t have enough cards to complete the war, you lose.</li>
+</ul></li>
+<li>The game continues until one player has all the cards and wins.</li>
+</ul>
 
-<p>When equal cards are turned up the players play the next five cards from their pile face down, sometimes saying &#8220;P - E - A - C - E&#8221; and then turning up the next card to decide which player wins (with the lowest card) all ten cards.</p>
+<h3 id="technologiesused">Technologies Used</h3>
 
-<p>If you don&#8217;t have enough cards to complete the war, you lose.</p>
+<ul>
+<li>JavaScript and jQuery for the logic</li>
+<li>Sass to output the CSS for the game presentation</li>
+<li>Codekit for productivity (JSHINT) and auto browse refresh, and quick and
+ painless minificiation of all js and css files. Images are also minified.</li>
+<li>Card Library for making working with cards (shuffling/dealing) a lot
+ easier</li>
+<li>Custom Lodash library which was a dependency of the Card.js library</li>
+<li>Twitter Bootstrap for quick and easy styling while this game is in the
+ development stage</li>
+<li>Bower - just because I wanted to play with installing things like jquery
+and normalize.css with it.</li>
+<li>SVG graphics - the cars are svgs so they can be easily resized without
+ any pixelization</li>
+<li>Adobe Kuler for the color scheme</li>
+</ul>
 
-<p>The game continues until one player has all the cards and wins.</p>
+<h3 id="designapproach">Design Approach</h3>
+
+<ul>
+<li>Minimalistic theme. Clean with lots of breathing room.</li>
+</ul>
+
+<h3 id="installationinstructions">Installation Instructions</h3>
+
+<pre><code>$ git clone
+</code></pre>
+
+<ol>
+<li>Clone to a folder on your computer</li>
+<li><code>$ cd peace</code></li>
+<li>View index.html in your browser.</li>
+<li>Peace out.</li>
+</ol>
+
+<h3 id="plannedfeatures">Planned Features</h3>
+
+<p>Once the basic logic is completed this will eventually be a game 2 players
+can play in separate players. Users will log in and high scores will be kept.
+This will be a mobile app for iPhone and Android and depending on I am feeling
+wacky, I must may try to make this work on a Blackberry as well.
+I envision a SPA (Single Page Application) using either the MEAN stack or
+Meteor JS.</p>
 
 </body>
 </html>

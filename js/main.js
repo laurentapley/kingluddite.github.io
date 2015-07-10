@@ -66,6 +66,11 @@ var getCardValue = function(card) {
   }
 };
 
+var endGame = function() {
+  'use strict';
+  $('#endGame').modal('show');
+};
+
 /*==========  COMPARE CARDS  ==========*/
 // grab both the cards to find out which is lower
 var compareCards = function(card1, card2) {
@@ -76,15 +81,15 @@ var compareCards = function(card1, card2) {
 
   // compare the values (lowest wins!)
   if (card1Value < card2Value) {
-    $('#p1Result').addClass('success').text('Winner');
-    $('#p2Result').addClass('error').text('Loser');
+    $('#p1Result').removeClass().addClass('success').text('Winner');
+    $('#p2Result').removeClass().addClass('error').text('Loser');
     // populates status with win message
     return 'Player 1';
   } else if (card2Value < card1Value) {
     // player 2 wins with lower value
 
-    $('#p2Result').addClass('success').text('Winner');
-    $('#p1Result').addClass('error').text('Loser');
+    $('#p2Result').removeClass().addClass('success').text('Winner');
+    $('#p1Result').removeClass().addClass('error').text('Loser');
 
     return 'Player 2';
   } else {
@@ -105,9 +110,8 @@ var renderScore = function(p1HandLength, p2HandLength) {
 };
 
 /*==========  Tie  ==========*/
-var playTieHand = function() {
+var playTieHand = function(p1Hand, p2Hand) {
   'use strict';
-
   // for both players
   // grab 5 cards and test the outputs in temp arrays
 
@@ -123,8 +127,9 @@ var playTieHand = function() {
   //  which is the last card in the sequence which will be used to determine the winner
   $('.player-one').append('<div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck ' +
     p1TieCards[4] + '\">West</div>');
-
+  console.log('p2Hands has ' + p2Hand.length + 'before splice ');
   var p2TieCards = p2Hand.splice(0, 5);
+  console.log('p2Hands has ' + p2Hand.length + 'after splice ');
   // append 5 cards to .player-one
   // a chuck of code that will add 5 cards
   //  the peace class is used to remove them easily when peace winner is determined
@@ -132,13 +137,17 @@ var playTieHand = function() {
   //  which is the last card in the sequence which will be used to determine the winner
   $('.player-two').append('<div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck">West</div><div class="peace card deck ' +
     p2TieCards[4] + '\">West</div>');
+  //$(".peace").slideUp(300).delay(800).fadeIn(400);
 
   var winner = findWinner(p1TieCards[4], p2TieCards[4], 'tie');
+  console.log(('winner:' + winner));
   if (winner === 'Player 1') {
     // grab both players peace cards
     var p1NewCombinedTiePile = p1TieCards.concat(p2TieCards);
     // add them to p1's pile
     p1Hand = p1Hand.concat(p1NewCombinedTiePile);
+    renderScore(p1Hand.length, p2Hand.length);
+    $('div').remove('.peace');
   } else if (winner === 'Player 2') {
     // grab both players peace cards
     var p2NewCombinedTiePile = p2TieCards.concat(p1TieCards);
@@ -147,39 +156,33 @@ var playTieHand = function() {
     // only render score after player 2's turn
     // score should now represent the winner with 5 plus cards
     //  and the loser with 5 less cards
-    renderScore(p1Hand.length, p2Hand.length);
     // remove the peace cards
-    $('.player-one').remove('.peace');
-    $('.player-two').remove('.peace');
+    $('div').remove('.peace');
+    renderScore(p1Hand.length, p2Hand.length);
+    //$('.player-two').remove('.peace');
   } else {
-    //playTieHand();
+    playTieHand();
   }
-  // $('#p1Score').text(p1Hand.length);
-  // $('#p2Score').text(p2Hand.length);
-
 };
-
-
 
 /*==========  Play Hand  ==========*/
 // when players click their cards, do this stuff
 var playHand = function() {
   'use strict';
-  console.log(playerTurn);
 
   // which player requested a card
   if (this.id === "p1Deck" && playerTurn === 'p1') {
     /*==========  Player 1  ==========*/
     // take the top card
     p1PlayedCard = p1Hand.shift();
-    // console.log($('#p1Pile').text());
-    // remove all classes
+    console.log(p1PlayedCard);
     // remove all classes and
     //  add card west classes plus the dynamic class
     $('#p1Pile').removeClass().addClass("card west " + p1PlayedCard);
     playerTurn = 'p2';
   } else if (this.id === "p2Deck" && playerTurn === 'p2') {
     /*==========  Player 2  ==========*/
+    $('#p2Deck').on('click', playHand);
     p2PlayedCard = p2Hand.shift();
     $('#p2Pile').removeClass().addClass("card west " + p2PlayedCard);
     playerTurn = 'p1';
@@ -193,10 +196,17 @@ var playHand = function() {
 /*==========  Find a winner  ==========*/
 var findWinner = function(p1PlayedCard, p2PlayedCard, state) {
   'use strict';
+  console.log('p1Hand' + p1Hand.length);
+  if (p1Hand.length < 24 || p2Hand.length < 24) {
+    //console.log('game over');
+    endGame();
+  }
+
   // when we have 2 cards to compare, call the compare fn
   if (p1PlayedCard !== null && p2PlayedCard !== null) {
+    var winnerMessage;
     if (state !== 'tie') {
-      var winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
+      winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
       $('.status').text(winnerMessage);
       // put the cards into the winners pile
       if (winnerMessage === 'Player 1') {
@@ -216,29 +226,27 @@ var findWinner = function(p1PlayedCard, p2PlayedCard, state) {
         // tie code here
         console.log('tie');
         playTieHand('tie');
+
       }
     } else {
       winnerMessage = compareCards(p1PlayedCard, p2PlayedCard);
       $('.status').text(winnerMessage);
+      return winnerMessage;
     }
 
-
     // Update UI
-    // remove the card from the losers pile (not needed)
-    // $('#p1Score').text(p1Hand.length);
-    // $('#p2Score').text(p2Hand.length);
-    renderScore(p1Hand.length);
-    renderScore(p2Hand.length);
-
+    renderScore(p1Hand.length, p2Hand.length);
   }
 };
 
 // grab the player decks
 // only if game is started
 
+
 /*==========  Stop The Game  ==========*/
 var stopGame = function() {
   'use strict';
+  //console.log('cards: ' + cards);
   // set globals back to starting values
   // game is turned off (set to false)
   gameStarted = false;
@@ -248,25 +256,54 @@ var stopGame = function() {
   // player hands are emptied out
   p1Hand = [];
   p2Hand = [];
+  // store what card was played from deck
+  p1PlayedCard = null;
+  p2PlayedCard = null;
+  // store and compare card values to see who wins turn
+  card1Value = undefined;
+  card2Value = undefined;
+  // enable both players to end game with truce at any time
+  p1Truce = false;
+  p2Truce = false;
   playerTurn = 'p1';
 
+
   // update UI
+  // set scores back to 0
   $('#p1Score').text(p1Hand.length);
   $('#p2Score').text(p2Hand.length);
   $('.status').text('Game Over');
   $('#btnStop').hide();
   $('#btnStart').show();
+  // remove event listeners
+  $('#btnStop').off('click', stopGame);
+  $('#p1Deck').off('click', playHand);
+  $('#p2Deck').off('click', playHand);
+  // remove winner/loser notification
+  $('#p1Result').text('');
+  $('#p2Result').text('');
+  // remove all classes and add card outline to both
+  //  players (just the way it was at the start of the
+  //  game)
+  $('#p1Pile').removeClass().addClass("card west outline");
+  $('#p2Pile').removeClass().addClass("card west outline");
+
 };
 
 /*==========  Dealing Cards  ==========*/
 
 var dealOutHand = function() {
   'use strict';
+  console.log('gets here deal out');
   // UI - let the user know the cards are shuffled
   // at time effect?
-  $('.status').text('Shuffling cards...');
+  $('.status').fadeIn("slow", function() {
+    $(this).text('Shuffling cards...');
+  });
   // shuffle the deck
-  var newHand = shuffle();
+  //console.log(shuffle())
+  var newHand = dealDeck();
+  console.log(newHand);
 
   // loop through the deck
   // 26 is hardcoded to represent half the deck
@@ -280,15 +317,21 @@ var dealOutHand = function() {
   // update the player card counts
   $('#p1Score').text(p1Hand.length);
   $('#p2Score').text(p2Hand.length);
-  $('.status').text('Cards Dealt');
+  $('.status').fadeIn("slow", function() {
+    $(this).text('Cards Dealt');
+  });
 };
 
 /*==========  Start Game  ==========*/
 
 var startGame = function(evt) {
   'use strict';
-  gameStarted = true;
+
   // allow players to click on cards
+  // if (gameStarted === false) {
+  //   console.log('game is off');
+  // }
+  gameStarted = true;
   $('#p1Deck').on('click', playHand);
   $('#p2Deck').on('click', playHand);
   $('.status').text('Game Started');

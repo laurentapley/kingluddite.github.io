@@ -66,7 +66,9 @@ if (!isFunction(_)) {
 
   dealDeck = function() {
     'use strict';
-    return cards;
+    var deckCopy = cards.join(',');
+    deckCopy = deckCopy.split(',');
+    return deckCopy;
   };
 
   resetDeckOfCards = function() {
@@ -99,5 +101,5 @@ if (!isFunction(_)) {
     return card;
   };
 
-  resetDeckOfCards();
+  //resetDeckOfCards();
 }

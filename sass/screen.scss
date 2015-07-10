@@ -37,30 +37,6 @@ body {
   margin: 0 auto;
 }
 
-.truce-box {
-  padding: 10px;
-  margin: 10px;
-}
-
-.container {
-  position: relative;
-  margin: 0 auto;
-  width: 960px;
-  border: 1px solid blue;
-  // .controls {
-  //   position: absolute;
-  //   top: 0;
-  //   right: 0;
-  //   padding: 20px;
-  // }
-}
-
-.content {
-  margin: 0 auto;
-// width: 50%;
-
-}
-
 .slogan {
   font-family: 'Great Vibes', cursive;
   font-size: 3em;
@@ -90,62 +66,17 @@ p {
 
 .success {
   color: $success-green;
+  padding-left: 30px;
 }
 
 .error {
   color: $error-red;
+  padding-left: 30px;
+}
+
+.modal-content {
+  background-color: $blue;
 }
 /* controls */
 /* links */
-
-.btn-success {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  background: #2aa843;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-}
-
-.btn-success:hover {
-  background: #32d123;
-  text-decoration: none;
-}
-
-.btn-danger {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  background: #e36d6d;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-}
-
-.btn-danger:hover {
-  background: #e81212;
-  text-decoration: none;
-}
-
-.btn-neutral {
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  background: $blue;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-}
-
-.btn-neutral:hover {
-  background: $blue;
-  text-decoration: none;
-}
 /*-----  End of General  ------*/

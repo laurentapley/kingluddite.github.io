@@ -6,6 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <title>PEACE - cards to end war</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/screen.css">
 </head>
 
@@ -18,8 +19,8 @@
     </header>
     <div class="content">
       <div class="controls">
-        <a id="btnStart" class="btn-success" href="#">Start Game</a>
-        <a id="btnStop" class="btn-danger" href="#">Stop Game</a>
+        <a id="btnStart" class="btn btn-success" href="#">Start Game</a>
+        <a id="btnStop" class="btn btn-danger" href="#">Stop Game</a>
       </div>
       <div class="player-one">
         <h2>Player 1<span id="p1Result"></span></h2>
@@ -27,6 +28,7 @@
         <div id="p1Deck" class="card deck">Deck</div>
         <div id="p1Pile" class="card outline">Deck</div>
       </div>
+      <!-- END .player-one -->
       <div class="player-two">
         <h2>Player 2<span id="p2Result"></span></h2>
         <p>Number of Cards: <span id="p2Score"></span></p>
@@ -36,14 +38,56 @@
     </div>
     <!-- END .content -->
     <div class="truce-box">
-      <a href="#" class="btn-neutral p1-truce">Player 1 Declares Truce</a>
-      <a href="#" class="btn-neutral p2-truce">Player 2 Declares Truce</a>
+      <a href="#" class="btn btn-primary p1-truce" data-toggle="modal">Player 1 Declares Truce</a>
+      <a href="#" class="btn btn-primary p2-truce">Player 2 Declares Truce</a>
     </div>
   </div>
   <!-- END .container -->
+  <div class="bs-example">
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">TRUCE</h4>
+          </div>
+          <div class="modal-body">
+            <p>Player 1 has declared a truce.</p>
+            <p>Do You accept?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Reject</button>
+            <button type="button" class="btn btn-success">Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bs-example">
+    <!-- Modal HTML -->
+    <div id="endGame" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">GAME OVER</h4>
+          </div>
+          <div class="modal-body">
+            <p>Would you like to play again?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-success">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script> -->
   <script src="js/lodash.custom.js"></script>
   <script src="app/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="js/helpers.js"></script>
   <script src="js/cards.js"></script>
   <script src="js/main.js"></script>
